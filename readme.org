@@ -1,0 +1,5 @@
+#+title: gespyranto - espyranto for Google Drive
+
+[[https://github.com/espyranto/espyranto][espyranto]] was written for conventional file systems with Jupyter notebooks. We have shifted our computational environment to Google Drive and Google Colab to facilitate data sharing. This library was written for use in Google Drive.
+
+Google Drive is sometimes like a conventional file system in a Linux environment, but not always. For example, you can link to files by a path, which works if you have mounted your Google Drive in Colab, but you can also link to them by a url which is sometimes a better choice because it works whether the Drive is mounted or not.
