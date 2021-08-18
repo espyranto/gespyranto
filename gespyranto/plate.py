@@ -34,9 +34,9 @@ class Plate:
             path = path[:-1]
             
         #See if there are outputs or just inputs
-        output = os.path.join(path, 'output/')
-        if not os.path.exists(output):
-            sys.exit()
+        #output = os.path.join(path, 'output/')
+        #if not os.path.exists(output):
+        #    sys.exit()
         
         params = os.path.join(path, 'input/Parameters.xlsx')
         if not os.path.exists(params):
