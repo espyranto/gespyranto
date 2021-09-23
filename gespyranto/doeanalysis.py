@@ -16,12 +16,6 @@ os.system('pip install pyDOE2')
 os.system('pip install ase')
 from pyDOE2 import *
 
-print('Installing gespyranto')
-os.system('pip install git+https://github.com/espyranto/gespyranto.git --upgrade')
-from gespyranto.plate import *
-from gespyranto.plate import Plate
-from gespyranto.umolh import umolH
-
 class analysis:
       '''
     Function takes in a dataframe, metals, components, and a target variable.
@@ -39,7 +33,7 @@ class analysis:
         components are the potential important solutions in the experiment and dataframe
         target is the target variable 
         '''
-        # Use gespyrnato to develop dataframe from directories
+
         self.metals = metals
         self.comp = components
         self.target = target
