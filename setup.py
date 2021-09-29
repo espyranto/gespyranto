@@ -13,7 +13,7 @@ setup(name='gespyranto',
       packages=['gespyranto'],
       setup_requires=[],
       data_files=[],
-      install_requires=[],
+      install_requires=['ase', 'pyDOE2'],
       long_description='''
       ''')
 
