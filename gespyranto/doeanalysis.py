@@ -1,4 +1,4 @@
-
+import numpy as np
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -10,7 +10,9 @@ from statsmodels.formula.api import ols
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import statsmodels.api as sm
-from sklearn.preprocessing import PolynomialFeatures   
+from sklearn.preprocessing import PolynomialFeatures
+from pyDOE2 import *
+
 class analysis:
       '''
     Function takes in a dataframe, metals, components, and a target variable.
