@@ -121,7 +121,7 @@ class Plate:
             df = pd.concat([df, pd.DataFrame(wd)])
 
         df.columns = ['Well-number', 'Solution', 'Volume']
-        self.nrows = len(vols) // ncols
+        #self.nrows = len(vols) // ncols
 
         self.df = df
 
