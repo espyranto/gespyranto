@@ -52,8 +52,8 @@ class Plate:
         p = self.parameters = pd.read_excel(params, engine='openpyxl')
         solution_labels = p['Solutions'].dropna().values.tolist()
         concentrations = p['Stock Conc (mM)'].dropna().values.tolist()
-        param_list = [x.strip(' ') for x in self.parameters['Parameters'].dropna().values.tolist()]
-        values_list = [x.strip(' ') for x in self.parameters['Unnamed: 1'].dropna().values.tolist()]
+        param_list = [x for x in self.parameters['Parameters'].dropna().values.tolist() if x.strip()]
+        values_list = [x for x in self.parameters['Unnamed: 1'].dropna().values.tolist() if x.strip()]
         pars = dict(zip(param_list, values_list))
         self.metadata = dict(**pars,
                              Solutions=solution_labels,
