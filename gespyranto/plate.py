@@ -52,8 +52,9 @@ class Plate:
         p = self.parameters = pd.read_excel(params, engine='openpyxl')
         solution_labels = p['Solutions'].dropna().values.tolist()
         concentrations = p['Stock Conc (mM)'].dropna().values.tolist()
-        pars = dict(zip(self.parameters['Parameters'].dropna().values,
-                        self.parameters['Unnamed: 1'].dropna().values))
+        param_list = [x.strip(' ') for x in self.parameters['Parameters'].dropna().values.tolist()]
+        values_list = [x.strip(' ') for x in self.parameters['Unnamed: 1'].dropna().values.tolist()]
+        pars = dict(zip(param_list, values_list))
         self.metadata = dict(**pars,
                              Solutions=solution_labels,
                              Concentrations=concentrations)
@@ -79,7 +80,7 @@ class Plate:
             self.plate_layout.rename_axis('Columns', axis=1, inplace=True) # label the column names as columns
 
         if not os.path.exists(layout):
-            self.uniqueatt = np.repeat(['In Situ'], self.nwells)
+            self.uniqueatt = np.repeat(['In Situ'], self.nwells) 
             self.metadata['Description'] = 'Screening experiment'
             self.plate_layout = pd.DataFrame(data = self.uniqueatt.reshape(self.nrows, self.ncols))
 
