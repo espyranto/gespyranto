@@ -50,8 +50,7 @@ class analysis:
           
           comps = []
           for i in self.comp:
-            comps.append(i)
-            
+            comps.append(self.df[i])
           self.X = np.column_stack(comps)
      
           self.X = PolynomialFeatures(2).fit_transform(self.X)
