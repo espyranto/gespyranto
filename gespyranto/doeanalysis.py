@@ -136,6 +136,46 @@ class analysis:
                                         f'{self.target}_stddev': error}, ignore_index = True)
         return df1
     
+      def plot_surface_2d(self,bounds = [2,2]):
+            '''plots surface for a 2 variable system
+            Takes in bounds which is an array of max values for comp 1 and comp 2
+            outputs a 3 d plot where the y axis and color is activity
+            '''
+            par = self..model.params.values
+            x1 = np.linspace(0, bounds[0], 10) 
+            x2 = np.linspace(0, bounds[1] , 10) 
+            X1,X2 = np.meshgrid(x1, x2)
+            X1 = X1.flatten()
+            X2 = X2.flatten()
+            def y(X1, X2, par):
+                y = (par[0] + par[1]*X1 + par[2]*X2 + par[3]*X1**2+ 
+                      par[4]*X1*X2 + par[5]*X2**2)
+                return y
+
+            Y = y(X1, X2, par)
+
+            size = int(np.sqrt(len(X1)))
+            X1 = X1.reshape(size,size)
+            X2 = X2.reshape(size, size)
+            Y = Y.reshape(size, size)
+
+
+            fig = plt.figure(figsize = (8,6))
+            ax = fig.gca(projection='3d')
+            surf = ax.plot_surface(X1, X2, Y, rstride=1, cstride=1, 
+                                    cmap=plt.cm.viridis,linewidth=0, antialiased=False)
+            s = ''
+            for i in range(len(self.comp)):
+              s+= str(self.comp[i]) + ' '
+            ax.set_title(f'{self.target} for'+s)
+            ax.set_xlabel(comp[0]+' mM')
+            ax.set_ylabel(comp[1]+' mM')
+            ax.set_zlabel(self.target)
+            ax.set_xticks(np.linspace(0,bounds[0], 5))
+            ax.set_yticks(np.linspace(0,bounds[1], 5))
+            fig.colorbar(surf, shrink=0.5, aspect=10)
+            plt.show()
+            
       def plot_surface(self, mbound = 2, psbound = 0.5, pegbound = 2):
         '''
         Plots the 3D surface of the metal and pegsh with a fixed PS concentration.
