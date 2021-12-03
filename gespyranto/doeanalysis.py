@@ -48,9 +48,12 @@ class analysis:
           self.df = self.df.drop(columns = np.setdiff1d(self.df.columns, (self.comp+[self.target])))
           self.df_path = self.df_path.drop(columns = np.setdiff1d(self.df_path.columns, (self.comp+[self.target]+['directory'])))
           
-          self.X = np.column_stack([self.df[self.comp[0]], 
-                                    self.df[self.comp[1]], 
-                                    self.df[self.comp[2]]])
+          comps = []
+          for i in self.comp:
+            comps.append(i)
+            
+          self.X = np.column_stack(comps)
+     
           self.X = PolynomialFeatures(2).fit_transform(self.X)
 
           self.y = self.df[self.target]
@@ -108,21 +111,31 @@ class analysis:
         for i in self.comp:
           unique_vals.append(self.df[i].unique())
         df1 = pd.DataFrame(columns = self.comp + [f'{self.target}_avg', f'{self.target}_stddev'])
-    
-        for i in unique_vals[0]:
-          for j in unique_vals[1]:
-            for k in unique_vals[2]:
-              df_temp = self.df[(self.df[self.comp[0]] == i)&(self.df[self.comp[1]] == j)&(self.df[self.comp[2]] == k)]
-              if len(df_temp)>0:
-                avg = np.array(df_temp[self.target].values.tolist()).mean(axis = 0)
-                error = np.array(df_temp[self.target].values.tolist()).std(axis = 0)
-                df1 = df1.append({self.comp[0]: i, 
-                                  self.comp[1]: j, 
-                                  self.comp[2]: k, 
-                                  f'{self.target}_avg': avg, 
-                                  f'{self.target}_stddev': error}, ignore_index = True)
+        if len(self.comp) == 3:
+              for i in unique_vals[0]:
+                for j in unique_vals[1]:
+                  for k in unique_vals[2]:
+                    df_temp = self.df[(self.df[self.comp[0]] == i)&(self.df[self.comp[1]] == j)&(self.df[self.comp[2]] == k)]
+                    if len(df_temp)>0:
+                      avg = np.array(df_temp[self.target].values.tolist()).mean(axis = 0)
+                      error = np.array(df_temp[self.target].values.tolist()).std(axis = 0)
+                      df1 = df1.append({self.comp[0]: i, 
+                                        self.comp[1]: j, 
+                                        self.comp[2]: k, 
+                                        f'{self.target}_avg': avg, 
+                                        f'{self.target}_stddev': error}, ignore_index = True)
+        if len(self.comp) == 2:
+              for i in unique_vals[0]:
+                for j in unique_vals[1]:
+                    df_temp = self.df[(self.df[self.comp[0]] == i)&(self.df[self.comp[1]] == j)]
+                    if len(df_temp)>0:
+                      avg = np.array(df_temp[self.target].values.tolist()).mean(axis = 0)
+                      error = np.array(df_temp[self.target].values.tolist()).std(axis = 0)
+                      df1 = df1.append({self.comp[0]: i, 
+                                        self.comp[1]: j, 
+                                        f'{self.target}_avg': avg, 
+                                        f'{self.target}_stddev': error}, ignore_index = True)
         return df1
-        
     
       def plot_surface(self, mbound = 2, psbound = 0.5, pegbound = 2):
         '''
