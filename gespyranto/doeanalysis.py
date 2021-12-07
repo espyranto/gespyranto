@@ -141,7 +141,7 @@ class analysis:
             Takes in bounds which is an array of max values for comp 1 and comp 2
             outputs a 3 d plot where the y axis and color is activity
             '''
-            par = self..model.params.values
+            par = self.model.params.values
             x1 = np.linspace(0, bounds[0], 10) 
             x2 = np.linspace(0, bounds[1] , 10) 
             X1,X2 = np.meshgrid(x1, x2)
