@@ -37,22 +37,26 @@ class analysis:
         self.df = df
         self.df = self.df.fillna(0)
         
-    
+        #create dataframe that focuses on the self.metals
+        ce = '|'.join(chemical_symbols)
+        nmetals = list(set(df.columns)-set(chemical_symbols))
+        metals_remove = list(set(df.columns)-set(nmetals)-set(metals))
+        self.df = self.df[~self.df.attributes.str.contains('Internal Standard|empty')]
+        self.df = self.df.loc[((self.df[metals_remove]==0)|(self.df[metals_remove]==None)).all(axis = 1)]
+        self.df.drop(columns = metals_remove, inplace = True)
+      
         #create dataframe with sklearn polynomial features
-        for i in metals:
-          self.df = self.df[self.df[i]!=0]
-          self.df.loc[-1] = 0
-          self.df_path = self.df.copy()
-          #self.df_path['path'] =  [j.split('/')[-1] for j in self.df.directory.values.tolist()]
+        self.df_path = self.df.copy()
+        #self.df_path['path'] =  [j.split('/')[-1] for j in self.df.directory.values.tolist()]
+
+        self.df = self.df.drop(columns = np.setdiff1d(self.df.columns, (self.comp+[self.target])))
+        self.df_path = self.df_path.drop(columns = np.setdiff1d(self.df_path.columns, (self.comp+[self.target]+['directory'])))
           
-          self.df = self.df.drop(columns = np.setdiff1d(self.df.columns, (self.comp+[self.target])))
-          self.df_path = self.df_path.drop(columns = np.setdiff1d(self.df_path.columns, (self.comp+[self.target]+['directory'])))
-          
-          comps = []
-          for i in self.comp:
-            comps.append(self.df[i])
+        comps = []
+        for i in self.comp:
+          comps.append(self.df[i])
           self.X = np.column_stack(comps)
-     
+
           self.X = PolynomialFeatures(2).fit_transform(self.X)
 
           self.y = self.df[self.target]
