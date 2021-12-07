@@ -40,7 +40,7 @@ class analysis:
         #create dataframe that focuses on the self.metals
         ce = '|'.join(chemical_symbols)
         nmetals = list(set(df.columns)-set(chemical_symbols))
-        metals_remove = list(set(df.columns)-set(nmetals)-set(metals))
+        metals_remove = list(set(df.columns)-set(nmetals)-set(self.metals))
         self.df = self.df[~self.df.attributes.str.contains('Internal Standard|empty')]
         self.df = self.df.loc[((self.df[metals_remove]==0)|(self.df[metals_remove]==None)).all(axis = 1)]
         self.df.drop(columns = metals_remove, inplace = True)
