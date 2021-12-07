@@ -45,6 +45,7 @@ class analysis:
         self.df = self.df[~self.df.attributes.str.contains('Internal Standard|empty')]
         self.df = self.df.loc[((self.df[metals_remove]==0)|(self.df[metals_remove]==None)).all(axis = 1)]
         self.df.drop(columns = metals_remove, inplace = True)
+        self.df.loc[len(self.df)] = 0
       
         #create dataframe with sklearn polynomial features
         self.df_path = self.df.copy()
