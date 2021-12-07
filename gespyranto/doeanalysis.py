@@ -12,6 +12,7 @@ import plotly.graph_objects as go
 import statsmodels.api as sm
 from sklearn.preprocessing import PolynomialFeatures
 from pyDOE2 import *
+from ase.data import chemical_symbols
 
 class analysis:
       '''
