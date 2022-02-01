@@ -319,7 +319,7 @@ class umolH:
 
     def dataframe(self):
         t = np.arange(self.umolH.shape[1]) * self.timestep / 3600
-        df = self.plate.pc
+        df = self.plate.pc.copy()
         df.columns = df.columns.droplevel()
         df['umolH_max_rate'] = self.umolH_max_rate
         df['umolH_max'] = self.max
