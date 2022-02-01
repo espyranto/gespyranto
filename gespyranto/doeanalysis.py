@@ -124,11 +124,13 @@ class analysis:
                     if len(df_temp)>0:
                       avg = np.array(df_temp[self.target].values.tolist()).mean(axis = 0)
                       error = np.array(df_temp[self.target].values.tolist()).std(axis = 0)
+                      index = df_temp.index.values
                       df1 = df1.append({self.comp[0]: i, 
                                         self.comp[1]: j, 
                                         self.comp[2]: k, 
                                         f'{self.target}_avg': avg, 
-                                        f'{self.target}_stddev': error}, ignore_index = True)
+                                        f'{self.target}_stddev': error, 
+                                        'wells': index}, ignore_index = True)
         if len(self.comp) == 2:
               for i in unique_vals[0]:
                 for j in unique_vals[1]:
@@ -136,10 +138,12 @@ class analysis:
                     if len(df_temp)>0:
                       avg = np.array(df_temp[self.target].values.tolist()).mean(axis = 0)
                       error = np.array(df_temp[self.target].values.tolist()).std(axis = 0)
+                      index = df_temp.index.values
                       df1 = df1.append({self.comp[0]: i, 
                                         self.comp[1]: j, 
                                         f'{self.target}_avg': avg, 
-                                        f'{self.target}_stddev': error}, ignore_index = True)
+                                        f'{self.target}_stddev': error, 
+                                        'wells': index}, ignore_index = True)
         return df1
     
       def plot_surface_2d(self,bounds = [2,2]):
