@@ -71,12 +71,12 @@ class Plate:
         # Previous experiments not containing plate_design files will output in situ here
         layout = os.path.join(path, 'input/plate_design.xlsx')
         if os.path.exists(layout):
-            self.uniqueatt = pd.read_excel(layout, header=None).loc[0:self.nrows-1].to_numpy().flatten()
+            self.uniqueatt = pd.read_excel(layout, header=None, engine='openpyxl').loc[0:self.nrows-1].to_numpy().flatten()
             description = pd.read_excel(layout, skiprows=range(0, int(self.nrows)),
-                                        header=None)[0].values[0] #takes the first and only element in df
+                                        header=None, engine='openpyxl')[0].values[0] #takes the first and only element in df
             self.metadata['Description'] = description
             # creates dataframe for plate layout
-            self.plate_layout = pd.read_excel(layout, header=None).loc[0:self.nrows-1]
+            self.plate_layout = pd.read_excel(layout, header=None, engine='openpyxl').loc[0:self.nrows-1]
             self.plate_layout.rename_axis('Rows', axis=0, inplace=True)  # label index as rows
             self.plate_layout.rename_axis('Columns', axis=1, inplace=True) # label the column names as columns
 
