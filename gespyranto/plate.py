@@ -108,7 +108,7 @@ class Plate:
             # This goes down the columns. So the second element is row 1,
             # column 0. I want the order to go across rows instead
             # arr.reshape(12, 9).T.flatten()
-            vols = pd.read_excel(xls, engine='openpyxl')['Volume'].values
+            vols = pd.read_excel(xls)['Volume'].values
             vols = vols.reshape(ncols, -1).T.flatten()
             
             #If an internal standard exists, must add a ninth row to vols
