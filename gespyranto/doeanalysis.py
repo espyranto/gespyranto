@@ -109,7 +109,28 @@ class analysis:
           bounds.append((min, max))
           mid.append((max+min)/2)
         return minimize(self.objective, mid, bounds=bounds) 
-        
+       
+      def median_df(self):
+        unique_vals = []
+        for i in self.comp:
+          unique_vals.append(self.df[i].unique())
+        df1 = pd.DataFrame(columns = self.comp + [f'{self.target}_med', f'{self.target}_stddev'])
+        if len(self.comp) == 3:
+              for i in unique_vals[0]:
+                for j in unique_vals[1]:
+                  for k in unique_vals[2]:
+                    df_temp = self.df[(self.df[self.comp[0]] == i)&(self.df[self.comp[1]] == j)&(self.df[self.comp[2]] == k)]
+                    if len(df_temp)>0:
+                      med = np.median(np.array(df_temp[self.target].values.tolist()))
+                      error = np.array(df_temp[self.target].values.tolist()).std(axis = 0)
+                      index = df_temp.index.values
+                      df1 = df1.append({self.comp[0]: i, 
+                                        self.comp[1]: j, 
+                                        self.comp[2]: k, 
+                                        f'{self.target}_med': med, 
+                                        f'{self.target}_stddev': error, 
+                                        'wells': index}, ignore_index = True)
+         return df1
         
       def avg_df(self):
         unique_vals = []
