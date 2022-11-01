@@ -22,7 +22,7 @@ from tabulate import tabulate
 
 class Plate:
 
-    self.datamodules = []  # this will be added to by plugins eg. umolH
+    datamodules = []  # this will be added to by plugins eg. umolH
 
     def __init__(self, path=None, ncols=12):
         '''Read the data in the directory at PATH.
@@ -143,7 +143,7 @@ class Plate:
 
         # Last we load the data
         self.data = {}
-        for module in self.datamodules:
+        for module in datamodules:
             mod = module(self)  # This is an instance
             self.data[mod.name] = mod
 
