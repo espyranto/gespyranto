@@ -21,11 +21,12 @@ from tabulate import tabulate
 
 
 class Plate:
-
+    
+    datamodules = []  # this will be added to by plugins eg. umolH
+    
     def __init__(self, path=None, ncols=12):
         '''Read the data in the directory at PATH.
         NCOLS is number of columns in the plate.'''
-        self.datamodules = []  # this will be added to by plugins eg. umolH
         self.path = path
         self.ncols = ncols
 
